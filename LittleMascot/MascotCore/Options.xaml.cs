@@ -10,16 +10,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MascotCore {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// Options.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window {
-        public MainWindow() {
+    public partial class Options : Window, InnerComponent {
+        public Options() {
             InitializeComponent();
+        }
+
+        public void OnInit(){
+            throw new NotImplementedException();
+        }
+
+        public void OnExit(){
+            throw new NotImplementedException();
+        }
+
+        public void SetParent(Window window){
+            throw new NotImplementedException();
         }
     }
 }
