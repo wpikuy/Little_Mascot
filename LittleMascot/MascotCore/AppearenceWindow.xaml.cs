@@ -26,12 +26,39 @@ namespace MascotCore {
     /// AppearenceWindow 作为Mascot的核心逻辑部分
     /// </summary>
     public partial class AppearenceWindow : Window{
+
+        private bool _isRunning;
+
         public AppearenceWindow() {
             InitializeComponent();
             initInnerComponents();
             fixPositionOnMultiscreens();
             initAppearence();
+            this.Closed += exitApplication;
         }
+
+        #region Exit Part
+
+        private void exitApplication(object sender, EventArgs e){
+            exitApplication();
+        }
+
+        public void exit_click(Object sender, RoutedEventArgs e){
+            exitApplication();
+        }
+
+        public void exitApplication(){
+            exitInnerComponents();
+            _isRunning = false;
+            _playThread.Abort();
+            Close();
+        }
+
+        public void text_click(Object sender, RoutedEventArgs e) {
+            ((Bubble)Components["Bubble"]).showText("ニャンパスー");
+        }
+
+        #endregion
 
         #region Inner Components
 
@@ -47,7 +74,7 @@ namespace MascotCore {
 
             // 需要被使用的实例
             Type[] comps ={
-                //typeof (Bubble),
+                typeof (Bubble),
                 //typeof (TrayIcon),
                 //typeof (Options),
                 //typeof (OuterComponentController)
@@ -55,11 +82,17 @@ namespace MascotCore {
 
             foreach (Type compType in comps){
                 var com = compType.Assembly.CreateInstance(compType.FullName) as InnerComponent; // 新建一个实例
-                com.OnInit(); // 初始化实例
                 com.SetParent(this);
+                com.OnInit(); // 初始化实例
                 string[] typeNames = compType.FullName.Split('.'); // 从类全名中获取类名
                 string typeName = typeNames[typeNames.Count() - 1]; // 得到类名
                 Components.Add(typeName, com); // 统一保管实例
+            }
+        }
+
+        private void exitInnerComponents(){
+            foreach (InnerComponent comp in Components.Values) {
+                comp.OnExit();
             }
         }
 
@@ -97,6 +130,7 @@ namespace MascotCore {
         /* 
          * 人物图形显示部分
          */
+
         private Image _image;
         private Dictionary<string, List<BitmapSource>> _animations;
         private float _animInterval = 0.4f;
@@ -110,7 +144,7 @@ namespace MascotCore {
             _image = PicImage;
             _playingAnim = "idle";
             _animations = new Dictionary<string, List<BitmapSource>>();
-            string animRootPath = @".\Animations";
+            string animRootPath = @".\anims";
 
             // 读取动画
             if (!Directory.Exists(animRootPath)){
@@ -140,11 +174,12 @@ namespace MascotCore {
             }
 
             // 开始播放动画
+            _isRunning = true;
             _playThread = new Thread(PlayAnim);
             _playThread.Start();
         }
 
-        private void changeAnim(string name){
+        public void changeAnim(string name){
             if (_animations.ContainsKey(name)){
                 _playingAnim = name;
             }
@@ -154,7 +189,8 @@ namespace MascotCore {
             string playingAnim = string.Empty;
             int curFrame = 0;
 
-            while (true){
+            while (_isRunning){
+
                 Thread.Sleep((int) (1000 * _animInterval));
                 if (!_animations.ContainsKey(_playingAnim)) {
                     continue;
@@ -180,7 +216,6 @@ namespace MascotCore {
         }
 
         #endregion
-
 
     }
 }

@@ -1,8 +1,23 @@
 ﻿<Window x:Class="MascotCore.AppearenceWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AppearenceWindow" Height="128" Width="128" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+        xmlns:mascotCore="clr-namespace:MascotCore"
+        Title="AppearenceWindow" Height="256" Width="256" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" Focusable="False" ResizeMode="NoResize">
     <Grid>
-        <Image x:Name="PicImage" MouseLeftButtonDown="OnLeftButton"></Image>
+        <Image x:Name="PicImage" MouseLeftButtonDown="OnLeftButton" Margin="128,128,0,0" Panel.ZIndex="100">
+            <Image.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="退出" Click="exit_click"/>
+                    <MenuItem Header="TestText" Click="text_click"></MenuItem>
+                </ContextMenu>
+            </Image.ContextMenu>
+        </Image>
+        <Grid HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200">
+            <Grid Name="BubbleFrame" Margin="0,0,0,0">
+                <Image x:Name="Bubble" Margin="0,0,0,0"></Image>
+                <TextBlock x:Name="BubbleText" TextWrapping="Wrap" TextAlignment="Center" Margin="0,10,10,71" FontSize="22" FontFamily="/XTT.ttf#Droid Sans" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF89272C">123</TextBlock>
+            </Grid>
+        </Grid>
+
     </Grid>
 </Window>
