@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MascotAppearence.Properties {
+namespace MascotCore.Properties {
 
 
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
