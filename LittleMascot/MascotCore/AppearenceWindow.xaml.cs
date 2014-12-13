@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Packaging;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -75,9 +76,8 @@ namespace MascotCore {
             // 需要被使用的实例
             Type[] comps ={
                 typeof (Bubble),
-                //typeof (TrayIcon),
-                //typeof (Options),
-                //typeof (OuterComponentController)
+                typeof (TrayIcon),
+                typeof (OutterComponentController)
             };
 
             foreach (Type compType in comps){
@@ -216,6 +216,20 @@ namespace MascotCore {
         }
 
         #endregion
+
+        // options part
+        private string _optionsPath = @".\mconf.bin";
+        private void checkOptions(){
+            if (File.Exists(_optionsPath)){
+                BinaryFormatter formatter = new BinaryFormatter();
+                using (var stream = File.OpenRead(_optionsPath)){
+                    var options = formatter.Deserialize(stream) as Dictionary<string, string>;
+                    if (bool.Parse(options["AutoExecuteAfterBooting"])){
+                        
+                    }
+                }
+            }
+        }
 
     }
 }

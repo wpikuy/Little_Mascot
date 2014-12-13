@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,26 +18,54 @@ namespace MascotCore {
     /// <summary>
     /// Options.xaml 的交互逻辑
     /// </summary>
-    public partial class Options : Window, InnerComponent {
+    public partial class Options : Window {
         public Options() {
             InitializeComponent();
-            //TODO: hide
+            OnInit();
+            Closed += (sender, args) => OnExit();
         }
 
         public void OnDrag(Object sender, RoutedEventArgs e){
             DragMove();
         }
 
+        public void OnSaveAndExit(Object sender, RoutedEventArgs e) {
+            Close();
+        }
+
+        private Dictionary<string, string> _options; 
+
         public void OnInit(){
-            throw new NotImplementedException();
+            _options = getOptions();
+            AutoExecuteAfterBooting.IsChecked = bool.Parse(_options["AutoExecuteAfterBooting"]);
+        }
+
+        private string _optionsName = @".\mconf.bin";
+        private Dictionary<string, string> getOptions(){
+            BinaryFormatter formatter = new BinaryFormatter();
+            Dictionary<string, string> result = null;
+            if (!File.Exists(_optionsName)){
+                result = new Dictionary<string, string>();
+                result.Add("AutoExecuteAfterBooting", false.ToString());
+                using (var stream = File.Create(_optionsName)){
+                    formatter.Serialize(stream, result);
+                }
+            }
+            using(var stream = File.OpenRead(_optionsName)){
+                result = formatter.Deserialize(stream) as Dictionary<string, string>;
+            }
+            return result;
+        }
+
+        private void saveOptions(Dictionary<string, string> obj){
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (var stream = File.Create(_optionsName)) {
+                formatter.Serialize(stream, obj);
+            }
         }
 
         public void OnExit(){
-            throw new NotImplementedException();
-        }
-
-        public void SetParent(Window window){
-            throw new NotImplementedException();
+            saveOptions(_options);
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -43,12 +73,3 @@ namespace MascotCore {
         }
     }
 }
-/*<Grid Visibility="Hidden">
-        <Rectangle Fill="#FFECECEC" HorizontalAlignment="Center" VerticalAlignment="Center" Height="360" Width="540"
-                   MouseLeftButtonDown="OnDrag"/>
-        <Grid HorizontalAlignment="Left" Height="360" VerticalAlignment="Top" Width="134">
-            <Label Content="Mini Mascot" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Panel.ZIndex="100" FontFamily="/XTT.ttf#Droid Sans" Height="35" Width="114" FontSize="18"/>
-            <Rectangle Fill="#FFE094AC" HorizontalAlignment="Left" Height="360" VerticalAlignment="Top" Width="134"/>
-        </Grid>
-    </Grid>
- */

@@ -21,18 +21,11 @@ namespace MascotMetroTabLibrary {
     public partial class LMTabController : UserControl {
         public LMTabController() {
             InitializeComponent();
-            DispatcherTimer delay = new DispatcherTimer();
-            delay.Interval = TimeSpan.FromSeconds(0.1);
-            delay.Tick += (sender, args) =>{
-                delay.Stop();
-                initController();
-            };
-            delay.Start();
+            Loaded += (sender, args) => initController();
         }
 
         private void initController() {
             _items = GetChildObjects<LMTabItem>();
-            Console.WriteLine(_items.Count);
             _selectedItem = _items[0];
 
             foreach (LMTabItem item in _items){
@@ -50,20 +43,15 @@ namespace MascotMetroTabLibrary {
                 item.MouseLeftButtonUp += (sender, args) => {
                     foreach (LMTabItem it in _items) {
                         it.Background = null;
+                        (LogicalTreeHelper.FindLogicalNode(Window.GetWindow(this), it.PageName) as Grid).Visibility = Visibility.Hidden;
                     }
                     _selectedItem = item;
                     _selectedItem.Background = new SolidColorBrush(PressedColor);
+                    (LogicalTreeHelper.FindLogicalNode(Window.GetWindow(this), _selectedItem.PageName) as Grid).Visibility = Visibility.Visible;
                 };
-
-                _selectedItem.Background = new SolidColorBrush(PressedColor);
             }
-
-            Application.Current.MainWindow.LostFocus += (sender, args) =>{
-                foreach (LMTabItem item in _items){
-                    item.Background = null;
-                }
-                _selectedItem.Background = new SolidColorBrush(PressedColor);
-            };
+            _selectedItem.Background = new SolidColorBrush(PressedColor);
+            (LogicalTreeHelper.FindLogicalNode(Window.GetWindow(this), _selectedItem.PageName) as Grid).Visibility = Visibility.Visible;
         }
 
         public List<T> GetChildObjects<T>() where T : UserControl {
@@ -88,7 +76,5 @@ namespace MascotMetroTabLibrary {
 
         public Color HoverColor { get; set; }
         public Color PressedColor { get; set; }
-        public int TopZIndex { get; set; }
-        public int BottomZIndex { get; set; }
     }
 }
