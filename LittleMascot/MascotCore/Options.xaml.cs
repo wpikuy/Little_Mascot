@@ -19,6 +19,11 @@ namespace MascotCore {
     public partial class Options : Window, InnerComponent {
         public Options() {
             InitializeComponent();
+            //TODO: hide
+        }
+
+        public void OnDrag(Object sender, RoutedEventArgs e){
+            DragMove();
         }
 
         public void OnInit(){
@@ -32,5 +37,18 @@ namespace MascotCore {
         public void SetParent(Window window){
             throw new NotImplementedException();
         }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+
+        }
     }
 }
+/*<Grid Visibility="Hidden">
+        <Rectangle Fill="#FFECECEC" HorizontalAlignment="Center" VerticalAlignment="Center" Height="360" Width="540"
+                   MouseLeftButtonDown="OnDrag"/>
+        <Grid HorizontalAlignment="Left" Height="360" VerticalAlignment="Top" Width="134">
+            <Label Content="Mini Mascot" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Panel.ZIndex="100" FontFamily="/XTT.ttf#Droid Sans" Height="35" Width="114" FontSize="18"/>
+            <Rectangle Fill="#FFE094AC" HorizontalAlignment="Left" Height="360" VerticalAlignment="Top" Width="134"/>
+        </Grid>
+    </Grid>
+ */

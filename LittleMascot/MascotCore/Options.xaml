@@ -1,8 +1,33 @@
 ﻿<Window x:Class="MascotCore.Options"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Options" Height="300" Width="300">
+        xmlns:mascotTest="clr-namespace:MascotMetroTabLibrary;assembly=MascotMetroTabLibrary"
+        Title="Options" Height="360" Width="540" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}">
+    <Window.BorderBrush>
+        <ImageBrush/>
+    </Window.BorderBrush>
+
     <Grid>
-        
+        <Rectangle Stroke="#ff666666" Panel.ZIndex="1000"/>
+        <Rectangle Fill="#FFECECEC" HorizontalAlignment="Center" VerticalAlignment="Center" Height="360" Width="540"
+                   MouseLeftButtonDown="OnDrag"/>
+        <Grid HorizontalAlignment="Left" Height="360" VerticalAlignment="Top" Width="134" Background="#FF0E0E0E">
+            <Label Content="Mini Mascot" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Panel.ZIndex="100" FontFamily="/XTT.ttf#Droid Sans" Height="35" Width="114" FontSize="18"/>
+            <Rectangle Fill="#FFE094AC" HorizontalAlignment="Left" Height="360" VerticalAlignment="Top" Width="134"/>
+            <mascotTest:LMTabController HorizontalAlignment="Left" Height="250" Margin="10,63,0,0" VerticalAlignment="Top" Width="114"
+                                        HoverColor="Aqua"
+                                        PressedColor="Black"
+                                        BottomZIndex="100"
+                                        TopZIndex="200">
+                <Grid>
+                    <mascotTest:LMTabItem Margin="-10,133,10,94" >
+                        <Label Content="hahahaha"></Label>
+                    </mascotTest:LMTabItem>
+                    <mascotTest:LMTabItem Margin="0,34,0,199" >
+                        <Label Content="hahahaha" Height="30" VerticalAlignment="Top" Margin="0,0,0,-13"></Label>
+                    </mascotTest:LMTabItem>
+                </Grid>
+            </mascotTest:LMTabController>
+        </Grid>
     </Grid>
 </Window>
