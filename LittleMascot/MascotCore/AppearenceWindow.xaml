@@ -15,7 +15,7 @@
         <Grid HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200">
             <Grid Name="BubbleFrame" Margin="0,0,0,0">
                 <Image x:Name="Bubble" Margin="0,0,0,0"></Image>
-                <TextBlock x:Name="BubbleText" TextWrapping="Wrap" TextAlignment="Center" Margin="0,10,10,71" FontSize="22" FontFamily="/XTT.ttf#Droid Sans" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF89272C">123</TextBlock>
+                <TextBlock x:Name="BubbleText" TextWrapping="Wrap" TextAlignment="Center" Margin="10,10,10,70" FontSize="22" FontFamily="/XTT.ttf#Droid Sans" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF89272C">1232323232323232323</TextBlock>
             </Grid>
         </Grid>
 

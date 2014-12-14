@@ -26,8 +26,8 @@ namespace MascotCore {
             _index = 0;
             Type[] comps ={
                 typeof (RandomMsg),
-                //typeof (TrayIcon),
-                //typeof (OuterComponentController)
+                typeof (Todo),
+                typeof (Timer)
             };
 
             foreach (Type compType in comps) {
@@ -41,7 +41,7 @@ namespace MascotCore {
             _listComponents = new List<OutterComponent>(Components.Values);
 
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(30);
+            _timer.Interval = TimeSpan.FromSeconds(5);
             _timer.Tick += (sender, args) =>{
                 _listComponents[_index].OnExecute();
                 _index++;

@@ -60,7 +60,9 @@
     <Compile Include="InnerComponent.cs" />
     <Compile Include="OuterComponentController.cs" />
     <Compile Include="RandomMsg.cs" />
+    <Compile Include="Timer.cs" />
     <Compile Include="Todo.cs" />
+    <Compile Include="TodoEntity.cs" />
     <Compile Include="TrayIcon.cs" />
     <Page Include="AppearenceWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
